@@ -55,7 +55,12 @@ import http from './../utils/http';
                history.go(-1);
             },
             async selectInfo(){
-                var url = 'queryInfo';
+                if(this.$route.query.code==0){
+                    var url = 'queryInfo';
+                }else{
+                    var url = 'queryPayedPrescriptionInfo';
+                }
+                
                 var data ={
                     serial:this.item.serial
                 }

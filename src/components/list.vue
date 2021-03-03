@@ -1,9 +1,9 @@
 <template>
     <div>
         <div class="title">
-            处方列表
+            {{title}}
         </div>
-        <div class="content">
+        <div :class="code==0?'content':'content content1'" >
             <div class="item" v-for="(item,index) in list" :key="index">
                 <div class="item_title" @click="goInfo(item)">
                     {{item.type}}
@@ -16,7 +16,7 @@
                 </div>
             </div>
         </div>
-        <div class="bottom">
+        <div class="bottom" v-if="code!=1">
             <div class="heji">
                 合计：￥{{totalFee}}
             </div>
@@ -34,19 +34,32 @@ import http from './../utils/http';
             return {
                 list:[],
                 totalFee:0.00,
-                date:''
+                date:'',
+                code:0,
+                title:''
             }
         },
         methods:{
             async getList(){
-                var url = 'queryFeeByCardId';
+                
+                if(this.$route.query.code==0){
+                     var url = 'queryFeeByCardId';
+                }else{
+                    var url = 'queryPayedList';
+                }
+               
                 var cardId = this.$route.query.cardId;
                 var data = {
                     cardId
                 }
                 var res = await http.post(this,url,data);
                 if(res.errcode === 0&&res.data!==null){
-                    this.list = res.data.list;
+                    if(this.$route.query.code==0){
+                        this.list = res.data.list;
+                    }else{
+                         this.list = res.data;
+                    }
+                   
                     this.totalFee = res.data.totalFee;
                     this.date = res.data.date;
                 }else{
@@ -75,11 +88,17 @@ import http from './../utils/http';
                 }
             },
             goInfo(item){
-                this.$router.push(`/listInfo?item=${JSON.stringify(item)}`)
+                this.$router.push(`/listInfo?item=${JSON.stringify(item)}&code=${this.code}`)
 
             }
         },
         created(){
+            if( this.$route.query.code==0){
+                this.title = '处方列表';
+            }else{
+                this.title = "历史记录"
+            }
+            this.code = this.$route.query.code;
             this.getList();
         }
     }
@@ -105,6 +124,9 @@ import http from './../utils/http';
     background: rgb(238,238,238);
     padding-bottom: 100px;
     margin-top: 60px;
+}
+.content1{
+    min-height: calc(100% - 60px);
 }
 .item{
     background: rgb(255,255,255);

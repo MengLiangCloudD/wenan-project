@@ -5,8 +5,9 @@
     </div>
     <div class="content">
       <!-- <p>请先填写身份证号：</p> -->
-      <Input v-model="value" placeholder="请输入就诊卡号" style="width: 300px" /><br>
-      <Button type="success" class="bttnn" @click="goIndex1">查询处方信息</Button>
+      <Input v-model="value" placeholder="请输入就诊卡号" style="width: 300px;margin-bottom:70px" /><br>
+      <Button type="success" class="bttnn" @click="goIndex1(0)">查询处方信息</Button>
+       <Button type="success" class="bttnn" @click="goIndex1(1)">查询历史缴费记录</Button>
     </div>
   </div>
 </template>
@@ -22,9 +23,9 @@ var a = 0;
       }
     },
     methods: {
-      goIndex1(){
+      goIndex1(code){
         if(this.value!=''){
-          this.$router.push(`/list?cardId=${this.value}`)
+          this.$router.push(`/list?cardId=${this.value}&code=${code}`)
         }else{
           this.$Message.error('请输入就诊卡号');
         }
@@ -99,6 +100,7 @@ var a = 0;
      background: #28b8a1;
     height: 35px;
     margin-top: 20px;
+    margin-bottom:20px
   }
 }
 </style>
