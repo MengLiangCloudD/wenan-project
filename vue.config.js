@@ -122,7 +122,7 @@ module.exports = {
         proxy: { //多个
           // 配置跨域处理 可以设置多个
           '/api': {
-            target: 'http://192.168.0.107:8089/',
+            target: 'http://192.168.0.109:8090/',
             ws: false,
             changeOrigin: true,
             pathRewrite: {

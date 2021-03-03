@@ -5,8 +5,9 @@
         </div>
         <div class="content">
             <div class="item" v-for="(item,index) in list" :key="index">
-                <div class="item_title">
+                <div class="item_title" @click="goInfo(item)">
                     {{item.type}}
+                    <img src="./../common/img/hei.png" class="hei" alt="">
                 </div>
                 <div class="item_content">
                     <p>{{item.createTime}}</p>
@@ -72,6 +73,10 @@ import http from './../utils/http';
                      this.$Message.error(res.errmsg);
                     
                 }
+            },
+            goInfo(item){
+                this.$router.push(`/listInfo?item=${JSON.stringify(item)}`)
+
             }
         },
         created(){
@@ -114,6 +119,7 @@ import http from './../utils/http';
     padding-bottom: 5px;
     border-bottom: 1px solid rgb(238,238,238);
     padding-left: 10px;
+    position: relative;
 }
 .item_content{
     padding-top:5px;
@@ -151,5 +157,12 @@ import http from './../utils/http';
     display: inline-block;
     vertical-align: middle;
     /* margin-right: 10px; */
+}
+.hei{
+    width: 8px;
+    height: 15px;
+    position: absolute;
+    top: 5px;
+    right: 10px;
 }
 </style>

@@ -20,6 +20,11 @@ const routes = [
     name: "pay",
     component: resolve=>(require(["@/components/pay"],resolve)),
   },
+  {
+    path: "/listInfo",
+    name: "listInfo",
+    component: resolve=>(require(["@/components/listInfo"],resolve)),
+  },
   
 ]
 
